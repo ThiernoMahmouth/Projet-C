@@ -4,6 +4,8 @@
 #include <stdbool.h>
 
 //structures
+typedef enum {NON, OUI} esConnecte;
+
 typedef struct listeClients
         {
             char* nom_client;
@@ -20,7 +22,7 @@ typedef struct listeClients
     {
         int id;
         char* nom;
-        enum esConnecte {NON, OUI};
+        esConnecte connection;
         char* adresseMac;
         char* adresseIp;
         listeClients *liste_clients;
@@ -62,7 +64,7 @@ typedef struct listeClients
             if (client != NULL){
                 printf("Entrez le nom du client %d: \n", i);
                 scanf("%s", nom_client);
-                client->nom_client = nom_client;
+                strcpy(client->nom_client, nom_client);
                 client->next = NULL;
                 if (listeClient == NULL){
                     listeClient = client;
@@ -98,10 +100,10 @@ typedef struct listeClients
             if (serveur != NULL){
                 printf("Entrez le nom du serveur %d: \n", i);
                 scanf("%s", nom_serveur);
-                serveur->nom_serveur = nom_serveur;
+                strcpy(serveur->nom_serveur, nom_serveur);
                 serveur->next = NULL;
                 if (listeServeur == NULL){
-                    listeServeur = serveur;
+                    listeServeur =serveur;
                     listeFinale = listeServeur;
                 }else{
                     listeFinale->next = serveur;
@@ -132,21 +134,21 @@ typedef struct listeClients
         if (computer != NULL){
             printf("Entrez le nom de la machine: \n");
             scanf("%s", variable);
-            computer->nom = variable;
+            strcpy(computer->nom,variable);
             printf("la machine est-elle connectée?\n");
             scanf("%s", variable);
             if (variable == "oui"){
-                computer->esConnecte = OUI;
+                computer->connection = OUI;
                 printf("Entrez l'adresse IP\n");
                 scanf("%s", variable);
-                computer->adresseIp = variable;
+                strcpy(computer->adresseIp, variable);
             }
             else{
-                computer->esConnecte = NON;
+                computer->connection = NON;
             }
             printf("Entrez l'adresse MAC\n");
                 scanf("%s", variable);
-                computer->adresseMac = variable;
+                strcpy(computer->adresseMac, variable);
 
             printf("Quel est le nombre de client?\n");
             scanf("%d", &nb);
@@ -188,6 +190,8 @@ typedef struct listeClients
         }
       
     }
+
+    
 
 // int main(void){
 //     Machine *m1 = malloc(sizeof(Machine));
