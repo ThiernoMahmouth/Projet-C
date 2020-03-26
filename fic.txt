@@ -1,0 +1,7 @@
+1,Machine1,@mac1,OUI,@ip1,[client1,client2],[]
+[dns, http, ftp,  ]
+NULL,[client1,client2],[s1,s2]
+3,Machine3,@mac3,OUI,@ip3,[client1,client2],[client2]
+4,Machine4,@mac4,OUI,@ip4,[client1,client2],[client2]
+5,Machine5,@mac5,OUI,@ip5,[client1,client2],[serveur1]
+6,Machine6,@mac6,OUI,@ip6,[client1,client2],[client2]
