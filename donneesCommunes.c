@@ -58,28 +58,30 @@ void updateFile(Machine *ordi)
     FILE *file=fopen("fic.txt","r+");
     if(file != NULL)
     {
-        char ligne[1000];
+        char ligne[2000];
         int nbLigne=1;
         while(fgets(ligne, sizeof(ligne), file)!= NULL)
         {
-            if (nbLigne==ordi->id)
+            if (nbLigne+1==ordi->id)
             {
                 //attributs dans l'ordre
-                fprintf(file,"%d, %s",ordi->id,ordi->nom);
+                fprintf(file,"%d, %s, ",ordi->id,ordi->nom);
                 //Liste clients
-                fputs(", [",file);
+                fputc('[',file);
                 for (listeClients *data = ordi->liste_clients; data != NULL; data = data->next)
                 {
                     fprintf(file, "%s, ", data->nom_client);
                 }
-                fputs("]\n",file);
+                fputs("], ",file);
                 //Liste des serveurs
                 fputc('[',file);
                 for (listeServeurs *data = ordi->liste_serveurs; data != NULL; data = data->next)
                 {
                     fprintf(file, "%s, ", data->nom_serveur);
                 }
+                fputc('\b',file);
                 fputs("]\n",file);
+                //rewind(file);
                 break;
             }
             nbLigne++;
