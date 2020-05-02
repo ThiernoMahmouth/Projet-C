@@ -20,7 +20,7 @@ typedef struct listeClients
     {
         int id;
         char* nom;
-        enum esConnecte {NON, OUI};
+        enum esConnecte {NON, OUI} etat;
         char* adresseMac;
         char* adresseIp;
         listeClients *liste_clients;
@@ -136,13 +136,13 @@ typedef struct listeClients
             printf("la machine est-elle connectée?\n");
             scanf("%s", variable);
             if (variable == "oui"){
-                computer->esConnecte = OUI;
+                computer->etat = OUI;
                 printf("Entrez l'adresse IP\n");
                 scanf("%s", variable);
                 computer->adresseIp = variable;
             }
             else{
-                computer->esConnecte = NON;
+                computer->etat = NON;
             }
             printf("Entrez l'adresse MAC\n");
                 scanf("%s", variable);

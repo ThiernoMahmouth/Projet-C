@@ -1,78 +1,92 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include "donneesCommunes.c"
 
-    typedef struct listeClients
-        {
-            char* nom_client;
-            struct listeClients *next;
-        } listeClients;
-    typedef struct listeServeurs
-        {
-            char* nom_serveur;
-            struct listeServeurs *next;
-        } listeServeurs;
-    typedef struct Machine 
-    {
-        int id;
-        char* nom;
-        enum estConnecte {NON, OUI} etat;
-        char* adresseMac;
-        char* adresseIp;
-        listeClients *liste_clients;
-        listeServeurs *liste_serveurs;
-    } Machine;
-    typedef struct listeMachine
-    {
-        Machine machine;
-        struct listeMachine *next;
-    } listeMachine;
-    typedef struct parc 
-    {
-        char* nom_parc;
-        listeMachine *liste_machines;
-    } parc;
 
-    void updateFile(Machine *ordi)
+        //***********Intallation de serveurs**************************
+    void installerServeur(Machine *ordi)
+    {
+        int nbre;
+        printf("Nombre de servers a installer: ");
+        scanf("%d",&nbre); 
+        printf("VOUS AVEZ SAISI %d\n",nbre);
+        //Tableau contenant le nom des serveurs
+        char **tab_chaine= (char**) malloc(nbre*sizeof(char*));
+        for(int i=0; i<nbre; i++)
+            {
+                tab_chaine[i]=(char *) malloc(25);
+            }
+            //Saisie des noms de serveurs
+            for(int i=0; i<nbre; i++)
+            {
+                printf("Nom du serveur %d: ", i+1);
+                scanf("%s",tab_chaine[i]);
+            }
+
+        listeServeurs *(*serverList)=&(ordi->liste_serveurs);
+        listeServeurs *dernier=malloc(sizeof(listeServeurs));
+        if(*serverList==NULL)
         {
-            FILE *file=fopen("fic.txt","r+");
-                if(file != NULL)
+            listeServeurs *n=malloc(sizeof(listeServeurs));
+            if (n!= NULL)
+            {
+                n->nom_serveur=tab_chaine[0];
+                n->next=NULL;
+                *serverList=n;                
+            } 
+            for(int j=1; j<nbre;j++)
+            {
+                listeServeurs *m=malloc(sizeof(listeServeurs));
+                if(m!= NULL)
                 {
-                    char ligne[1000];
-                    while(fgets(ligne, sizeof(ligne), file)!= NULL)
+                    m->nom_serveur=tab_chaine[j];
+                    m->next=NULL;
+                    //Parcourt jusqu'au dernier element de la liste
+                    dernier=*serverList;
+                    while(dernier->next != NULL)
                     {
-                        if (ligne[0]==itoa(ordi->id))
-                        {
-                            //attributs dans l'ordre
-                            fprintf("%d, %s, %s, %s, %s",ordi->id,ordi->nom,ordi->adresseMac,ordi->etat,ordi->adresseIp);
-                            //Liste clients
-                            fputs(", [",file);
-                            for (listeClients *data = ordi->liste_clients; data != NULL; data = data->next)
-                            {
-                                fprintf(file, "%s, ", data->nom_client);
-                            }
-                            fputs("]\n",file);
-                            //Liste des serveurs
-                            fputc('[',file);
-                            for (listeServeurs *data = ordi->liste_serveurs; data != NULL; data = data->next)
-                            {
-                                fprintf(file, "%s, ", data->nom_serveur);
-                            }
-                            fputs("]\n",file);
-
-                        }
+                        dernier=dernier->next;
                     }
+                    //Ajouter le nouvel element a la fin
+                    dernier->next=m;
                 }
+                
+            }
         }
-        void desinstallerServeur(Machine *ordi, char *serverName)
+        else
+        {
+            for(int i=0; i<nbre;i++)
+            {
+                listeServeurs *m=malloc(sizeof(listeServeurs));
+                if(m!= NULL)
+                {
+                    m->nom_serveur=tab_chaine[i];
+                    m->next=NULL;
+                    //Parcourt jusqu'au dernier element de la liste
+                    dernier=*serverList;
+                    while(dernier->next != NULL)
+                    {
+                        dernier=dernier->next;
+                    }
+                    //Ajouter le nouvel element a la fin
+                    dernier->next=m;
+                }
+                
+            }
+        }
+        updateFile(ordi);
+    }
+        //***********Desintallation d'un serveur**************************
+        void desinstallerServeur(Machine *ordi, char* serverName)
         {
             listeServeurs *(*serverList)=&(ordi->liste_serveurs);
             listeServeurs *precedent= NULL;
-            listeServeurs *courant=*serverList;
-            while(courant)
+            int i=0;
+            for(listeServeurs *courant=*serverList; courant!= NULL; courant=courant->next)
             {
                 listeServeurs *suivant=courant->next;
-                if (courant->nom_serveur==serverName)
+                if (!strcmp(courant->nom_serveur,serverName))
                 {
                     //suppession
                     free(courant);
@@ -86,10 +100,114 @@
                         *serverList=suivant;
                     }
                 }
+                
                 else
                 {
                     precedent=courant;
                 }
-                courant=suivant;
+        
+            }
+        }
+        //***********Installation de Clients**************************
+    void installerClient(Machine *ordi)
+    {
+        int nbre;
+        printf("Nombre de Clients a installer: ");
+        scanf("%d",&nbre); 
+        //Tableau contenant le nom des serveurs
+        char **tab_chaine= (char**) malloc(nbre*sizeof(char*));
+            for(int i=0; i<nbre; i++)
+            {
+                tab_chaine[i]=(char *) malloc(25);
+            }
+            //Saisie des noms de client
+            for(int i=0; i<nbre; i++)
+            {
+                printf("Nom du client %d: ", i+1);
+                scanf("%s",tab_chaine[i]);
+            }
+
+        listeClients *(*clientList)=&(ordi->liste_clients);
+        listeClients *dernier=malloc(sizeof(listeClients));
+        if(*clientList==NULL)
+        {
+            listeClients *n=malloc(sizeof(listeClients));
+            if (n!= NULL)
+            {
+                n->nom_client=tab_chaine[0];
+                n->next=NULL;
+                *clientList=n;                
+            } 
+            for(int j=1; j<nbre;j++)
+            {
+                listeClients *m=malloc(sizeof(listeClients));
+                if(m!= NULL)
+                {
+                    m->nom_client=tab_chaine[j];
+                    m->next=NULL;
+                    //Parcourt jusqu'au dernier element de la liste
+                    dernier=*clientList;
+                    while(dernier->next != NULL)
+                    {
+                        dernier=dernier->next;
+                    }
+                    //Ajouter le nouvel element a la fin
+                    dernier->next=m;
+                }
+                
+            }
+        }
+        else
+        {
+            for(int i=0; i<nbre;i++)
+            {
+                listeClients *m=malloc(sizeof(listeClients));
+                if(m!= NULL)
+                {
+                    m->nom_client=tab_chaine[i];
+                    m->next=NULL;
+                    //Parcourt jusqu'au dernier element de la liste
+                    dernier=*clientList;
+                    while(dernier->next != NULL)
+                    {
+                        dernier=dernier->next;
+                    }
+                    //Ajouter le nouvel element a la fin
+                    dernier->next=m;
+                }
+                
+            }
+        }
+        updateFile(ordi);
+    }
+        //***********Desinstallation de Clients**************************
+    void desinstallerClient(Machine *ordi, char* clientName)
+        {
+            listeClients *(*clientList)=&(ordi->liste_clients);
+            listeClients *precedent= NULL;
+            int i=0;
+            for(listeClients *courant=*clientList; courant!= NULL; courant=courant->next)
+            {
+                listeClients *suivant=courant->next;
+                if (!strcmp(courant->nom_client,clientName))
+                {
+                    //suppession
+                    free(courant);
+                    //pointe sur ...
+                    if (precedent!=NULL)
+                    {
+                        precedent->next=suivant;
+                    }
+                    else    //c le 1er element de la liste donc il n'a pas de precedent
+                    {
+                        *clientList=suivant;
+                    }
+                }
+                
+                else
+                {
+                    precedent=courant;
+                }
+        
             }
         }
