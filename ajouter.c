@@ -2,115 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include "donneesCommunes.c"
 
-//structures
-typedef struct listeClients
-        {
-            char* nom_client;
-            struct listeClients *next;
-        } listeClients;
-
-    typedef struct listeServeurs
-        {
-            char* nom_serveur;
-            struct listeServeurs *next;
-        } listeServeurs;
-
-    typedef struct Machine 
-    {
-        int id;
-        char* nom;
-        enum esConnecte {NON, OUI} etat;
-        char* adresseMac;
-        char* adresseIp;
-        listeClients *liste_clients;
-        listeServeurs *liste_serveurs;
-    } Machine;
-
-    typedef struct listeMachine
-    {
-        Machine *machine;
-        struct listeMachine *next;
-    } listeMachine;
-
-    typedef struct parc 
-    {
-        char* nom_parc;
-        listeMachine *liste_machines;
-    } Parc;
-
-
-    //fonction permettant de se deplacer vers la derniere position de la liste des clients
-    listeClients *positionElementClient( listeClients *listeClient){
-        listeClients *positionElementClient = malloc (sizeof(listeClients));
-        if (positionElementClient != NULL){
-            positionElementClient = listeClient;
-            while (positionElementClient->next != NULL){
-                positionElementClient = positionElementClient->next;
-            }
-        }
-        return positionElementClient;
-    }
-
-    listeClients ajouter_client(int n, listeClients *listeClient){
-        int i; 
-        listeClients *positionElementClient (listeClients *listeClient);
-        listeClients *listeFinale = positionElementClient(listeClient);
-        char* nom_client;
-        for(i = 0; i < n; i++){
-            listeClients *client = malloc(sizeof(listeClients));
-            if (client != NULL){
-                printf("Entrez le nom du client %d: \n", i);
-                scanf("%s", nom_client);
-                client->nom_client = nom_client;
-                client->next = NULL;
-                if (listeClient == NULL){
-                    listeClient = client;
-                    listeFinale = listeClient;
-                }else{
-                    listeFinale->next = client;
-                    listeFinale = listeFinale->next;
-                }
-            }
-        }
-      
-    }
-
-    //fonction permettant de se deplacer vers la derniere position de la liste des serveurs
-    listeServeurs *positionElementServeur( listeServeurs *listeServeur){
-        listeServeurs *positionElementServeur = malloc (sizeof(listeServeurs));
-        if (positionElementServeur != NULL){
-            positionElementServeur = listeServeur;
-            while (positionElementServeur->next != NULL){
-                positionElementServeur = positionElementServeur->next;
-            }
-        }
-        return positionElementServeur;
-    }
-
-    listeServeurs ajouter_serveur(int n, listeServeurs *listeServeur){
-        int i; 
-        listeServeurs *positionElementServeur (listeServeurs *listeServeur);
-        listeServeurs *listeFinale = positionElementServeur(listeServeur);
-        char* nom_serveur;
-        for(i = 0; i < n; i++){
-            listeServeurs *serveur = malloc(sizeof(listeServeurs));
-            if (serveur != NULL){
-                printf("Entrez le nom du serveur %d: \n", i);
-                scanf("%s", nom_serveur);
-                serveur->nom_serveur = nom_serveur;
-                serveur->next = NULL;
-                if (listeServeur == NULL){
-                    listeServeur = serveur;
-                    listeFinale = listeServeur;
-                }else{
-                    listeFinale->next = serveur;
-                    listeFinale = listeFinale->next;
-                }
-            }
-        }
-      
-    }
 
     listeMachine *positionMachine( listeMachine *listemachine){
         listeMachine *positionMachine = malloc (sizeof(listeMachine));
@@ -132,21 +25,21 @@ typedef struct listeClients
         if (computer != NULL){
             printf("Entrez le nom de la machine: \n");
             scanf("%s", variable);
-            computer->nom = variable;
+            strcpy(computer->nom,variable);
             printf("la machine est-elle connectée?\n");
             scanf("%s", variable);
             if (variable == "oui"){
                 computer->etat = OUI;
                 printf("Entrez l'adresse IP\n");
                 scanf("%s", variable);
-                computer->adresseIp = variable;
+                strcpy(computer->adresseIp, variable);
             }
             else{
                 computer->etat = NON;
             }
             printf("Entrez l'adresse MAC\n");
                 scanf("%s", variable);
-                computer->adresseMac = variable;
+                strcpy(computer->adresseMac, variable);
 
             printf("Quel est le nombre de client?\n");
             scanf("%d", &nb);
@@ -188,6 +81,8 @@ typedef struct listeClients
         }
       
     }
+
+    
 
 // int main(void){
 //     Machine *m1 = malloc(sizeof(Machine));
