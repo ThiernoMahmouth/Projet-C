@@ -2,43 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-
-//structures
-typedef struct listeClients
-        {
-            char* nom_client;
-            struct listeClients *next;
-        } listeClients;
-
-    typedef struct listeServeurs
-        {
-            char* nom_serveur;
-            struct listeServeurs *next;
-        } listeServeurs;
-
-    typedef struct Machine 
-    {
-        int id;
-        char* nom;
-        enum esConnecte {NON, OUI};
-        char* adresseMac;
-        char* adresseIp;
-        listeClients *liste_clients;
-        listeServeurs *liste_serveurs;
-    } Machine;
-
-    typedef struct listeMachine
-    {
-        Machine *machine;
-        struct listeMachine *next;
-    } listeMachine;
-
-    typedef struct parc 
-    {
-        char* nom_parc;
-        listeMachine *liste_machines;
-    } Parc;
-
+#include "donneesCommunes.c"
 
     //fonction permettant de se deplacer vers la derniere position de la liste des clients
     listeClients *positionElementClient( listeClients *listeClient){
@@ -136,13 +100,13 @@ typedef struct listeClients
             printf("la machine est-elle connectée?\n");
             scanf("%s", variable);
             if (variable == "oui"){
-                computer->esConnecte = OUI;
+                computer->etat = OUI;
                 printf("Entrez l'adresse IP\n");
                 scanf("%s", variable);
                 computer->adresseIp = variable;
             }
             else{
-                computer->esConnecte = NON;
+                computer->etat = NON;
             }
             printf("Entrez l'adresse MAC\n");
                 scanf("%s", variable);
