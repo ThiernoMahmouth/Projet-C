@@ -9,7 +9,7 @@ int main()
         Machine pc;
         char *serveur;
         //int nbServerIns,nbClientIns;
-        pc.id=1;
+        pc.id=3;
         pc.nom="sama PC";
         pc.adresseMac="adresse mac";
         pc.adresseIp="adresse ip";
@@ -21,17 +21,17 @@ int main()
         afficherServeurs(&pc);
         char **tab=(char**) malloc(sizeof(char*));
         tab[0]=(char *) malloc(25);
-        printf("Nom du serveur a desinstaller: ");
+       /* printf("Nom du serveur a desinstaller: ");
         scanf("%s",tab[0]);
         desinstallerServeur(&pc,tab[0]);
-        afficherServeurs(&pc);
+        afficherServeurs(&pc);*/
         // *******************Client*****************///////
-        installerClient(&pc);
+       /* installerClient(&pc);
         afficherClients(&pc);
         tab[1]=(char *) malloc(25);
         printf("Nom du client a desinstaller: ");
         scanf("%s",tab[1]);
         desinstallerClient(&pc,tab[1]);
-        afficherClients(&pc);
+        afficherClients(&pc);*/
 }
 
