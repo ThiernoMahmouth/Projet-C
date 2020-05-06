@@ -27,11 +27,18 @@
         Machine machine;
         struct listeMachine *next;
     } listeMachine;
+    typedef struct Reseau
+    {
+        char* addrese;
+        char* masque;
+        listeMachine *liste_machines;
+    } Reseau;
     typedef struct parc 
     {
         char* nom_parc;
+        Reseau *reseau ;
         listeMachine *liste_machines;
-    } parc;
+    } Parc;
 
 void afficherServeurs(Machine *ordi)
 {
@@ -48,6 +55,15 @@ void afficherClients(Machine *ordi)
     for (listeClients *data = *clientList; data != NULL; data = data->next)
     {
         printf("%s ", data->nom_client);
+    }
+    printf("\n");
+}
+void afficherReseau(Reseau *reseau)
+{
+    listeMachine *(*machineList)=&(reseau->liste_machines);
+    for (listeMachine *data = *machineList; data != NULL; data = data->next)
+    {
+        printf("%s ", data->machine.nom);
     }
     printf("\n");
 }

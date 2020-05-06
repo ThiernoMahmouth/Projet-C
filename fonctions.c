@@ -10,7 +10,6 @@
         int nbre;
         printf("Nombre de servers a installer: ");
         scanf("%d",&nbre); 
-        printf("VOUS AVEZ SAISI %d\n",nbre);
         //Tableau contenant le nom des serveurs
         char **tab_chaine= (char**) malloc(nbre*sizeof(char*));
         for(int i=0; i<nbre; i++)
@@ -211,3 +210,65 @@
         
             }
         }
+        //*******************Ajouter une Machine au reseau***************//
+        void ajouterMachine(Reseau *reseau,Machine pc)
+        {
+            listeMachine *(*MachineList)=&(reseau->liste_machines);
+            listeMachine *dernier=malloc(sizeof(listeMachine));
+            if(*MachineList==NULL)
+            {
+                listeMachine *n=malloc(sizeof(listeMachine));
+                if (n!= NULL)
+                {
+                    n->machine=pc;
+                    n->next=NULL;
+                    *MachineList=n;                
+                } 
+            }
+            else
+            {
+                listeMachine *m=malloc(sizeof(listeMachine));
+                if(m!= NULL)
+                {
+                    m->machine=pc;
+                    m->next=NULL;
+                    //Parcourt jusqu'au dernier element de la liste
+                    dernier=*MachineList;
+                    while(dernier->next != NULL)
+                    {
+                        dernier=dernier->next;
+                    }
+                    //Ajouter le nouvel element a la fin
+                    dernier->next=m;
+                }
+            }
+        }
+        //*******************Retirer une Machine du reseau***************//
+    void retirerMachine(Reseau *rsx, Machine ordi)
+{
+    listeMachine *(*machineList)=&(rsx->liste_machines);
+    listeMachine *precedent= NULL;
+    int i=0;
+    for(listeMachine *courant=*machineList; courant!= NULL; courant=courant->next)
+    {
+        listeMachine *suivant=courant->next;
+        if (!strcmp(courant->machine.nom,ordi.nom))
+        {
+            //suppession
+            free(courant);
+            //pointe sur ...
+            if (precedent!=NULL)
+            {
+                precedent->next=suivant;
+            }
+            else    //c le 1er element de la liste donc il n'a pas de precedent
+            {
+                *machineList=suivant;
+            }
+        }
+        else
+        {
+            precedent=courant;
+        }
+    }
+}

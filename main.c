@@ -6,32 +6,60 @@
 
 int main()
 {
+        Parc parc, *p;
+        p=&parc;
         Machine pc;
+        Machine computer;
         char *serveur;
+        computer.id=5;
+        computer.nom="Toshiba";
+        computer.adresseMac="adresse mac";
+        computer.adresseIp="adresse ip";
+        computer.etat=NON;
+        computer.liste_serveurs=NULL;
+        computer.liste_clients=NULL;
         //int nbServerIns,nbClientIns;
         pc.id=3;
-        pc.nom="sama PC";
+        pc.nom="HP";
         pc.adresseMac="adresse mac";
         pc.adresseIp="adresse ip";
         pc.etat=NON;
         pc.liste_serveurs=NULL;
         pc.liste_clients=NULL;
+        ///////////////
         // *****************Serveur********************//
+/*
         installerServeur(&pc);
         afficherServeurs(&pc);
-        char **tab=(char**) malloc(sizeof(char*));
-        tab[0]=(char *) malloc(25);
-       /* printf("Nom du serveur a desinstaller: ");
+        printf("Nom du serveur a desinstaller: ");
         scanf("%s",tab[0]);
         desinstallerServeur(&pc,tab[0]);
-        afficherServeurs(&pc);*/
+        afficherServeurs(&pc);
+*/
         // *******************Client*****************///////
-       /* installerClient(&pc);
+/*      
+        installerClient(&pc);
         afficherClients(&pc);
         tab[1]=(char *) malloc(25);
         printf("Nom du client a desinstaller: ");
         scanf("%s",tab[1]);
         desinstallerClient(&pc,tab[1]);
-        afficherClients(&pc);*/
+        afficherClients(&pc);
+*/
+        // **************** Reseau ******************* //
+        /*parc.nom_parc="my Parc";
+        computer.nom="HP";
+        pc2.nom="Mac";
+        pc3.nom="Dell";*/
+        ajouterMachine(p->reseau,computer);
+        afficherReseau(p->reseau);
+        retirerMachine(p->reseau,computer);
+        afficherReseau(p->reseau);
+        /*ajouterMachine(&parc,computer);
+        afficherReseau(&parc);*/
+        /*ajouterMachine(&monParc,pc2);
+        afficherReseau(&monParc);
+        ajouterMachine(&monParc,pc3);
+        afficherReseau(&monParc);*/
 }
 
