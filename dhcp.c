@@ -20,7 +20,7 @@ Reseau *DHCP (Reseau *reseau, Machine *m1){
         number = rand()%255;
         sprintf(lastDigits, "%d", number); //conversion de int a char
         strcat(ip ,lastDigits);
-        for (listeMachine *tmp = reseau; tmp != NULL; tmp = tmp->next){
+        for (listeMachine *tmp = reseau->liste_machines; tmp != NULL; tmp = tmp->next){
             if (!strcmp(tmp->machine.adresseIp, ip)){
                 unique = unique++;
             }
