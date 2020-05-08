@@ -77,8 +77,11 @@
         updateFile(ordi);
     }
         //***********Desintallation d'un serveur**************************
-        void desinstallerServeur(Machine *ordi, char* serverName)
+        void desinstallerServeur(Machine *ordi )
         {
+            char* serverName;
+            printf("Nom du client a desinstaller: ");
+            scanf("%s",serverName);
             listeServeurs *(*serverList)=&(ordi->liste_serveurs);
             listeServeurs *precedent= NULL;
             int i=0;
@@ -214,33 +217,27 @@
         void ajouterMachine(Reseau *reseau,Machine pc)
         {
             listeMachine *(*MachineList)=&(reseau->liste_machines);
-            listeMachine *dernier=malloc(sizeof(listeMachine));
+            listeMachine *n=malloc(sizeof(listeMachine));
+            if (n!= NULL)
+            {
+                n->machine=pc;
+                n->next=NULL;
+            }
             if(*MachineList==NULL)
             {
-                listeMachine *n=malloc(sizeof(listeMachine));
-                if (n!= NULL)
-                {
-                    n->machine=pc;
-                    n->next=NULL;
-                    *MachineList=n;                
-                } 
+                *MachineList=n;              
             }
             else
             {
-                listeMachine *m=malloc(sizeof(listeMachine));
-                if(m!= NULL)
-                {
-                    m->machine=pc;
-                    m->next=NULL;
                     //Parcourt jusqu'au dernier element de la liste
-                    dernier=*MachineList;
-                    while(dernier->next != NULL)
-                    {
-                        dernier=dernier->next;
-                    }
-                    //Ajouter le nouvel element a la fin
-                    dernier->next=m;
+                listeMachine *dernier=malloc(sizeof(listeMachine));
+                dernier=*MachineList;
+                while(dernier->next != NULL)
+                {
+                    dernier=dernier->next;
                 }
+                //Ajouter le nouvel element a la fin
+                dernier->next=n;
             }
         }
         //*******************Retirer une Machine du reseau***************//
