@@ -80,7 +80,7 @@ void updateFile(Machine *ordi)
         {
             if (nbLigne+1==ordi->id)
             {
-                //attributs dans l'ordre
+               //attributs dans l'ordre
                 fprintf(file,"%d, %s, ",ordi->id,ordi->nom);
                 //Liste clients
                 fputc('[',file);
@@ -95,14 +95,16 @@ void updateFile(Machine *ordi)
                 {
                     fprintf(file, "%s, ", data->nom_serveur);
                 }
-                fputc('\b',file);
                 fputs("]\n",file);
                 //rewind(file);
                 break;
             }
             nbLigne++;
         }
+        fclose(file);
     }
+    //ajouter 
+
             
 }
 

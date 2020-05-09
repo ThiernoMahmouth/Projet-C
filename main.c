@@ -9,14 +9,15 @@ int main()
         Parc parc, *p;
         p=&parc;
         Machine pc1,computer;
-        char *serveur;
         computer.id=5;
         computer.nom="Toshiba";
-        computer.adresseMac="adresse mac";
-        computer.adresseIp="adresse ip";
+        computer.adresseMac="E2D45SSUI"; 
+        computer.adresseIp="192.168.145.25";
         computer.etat=NON;
         computer.liste_serveurs=NULL;
         computer.liste_clients=NULL;
+        ping("192.168.140.101");
+
         //int nbServerIns,nbClientIns;
        /* pc1.id=3;
         pc1.nom="HP";
@@ -26,17 +27,18 @@ int main()
         pc1.liste_serveurs=NULL;
         pc1.liste_clients=NULL;*/
         ///////////////
-        ajouterMachine(p->reseau,computer);
+/*
+        ajouterMachineReseau(p->reseau,computer);
         afficherReseau(p->reseau);
+*/
         // *****************Serveur********************//
-
+/*
         installerServeur(&computer);
         afficherServeurs(&computer);
-        printf("Nom du serveur a desinstaller: ");
-        scanf("%s",serveur);
-        desinstallerServeur(&computer,serveur);
+        
+        desinstallerServeur(&computer);
         afficherServeurs(&computer);
-
+*/
         // *******************Client*****************///////
 /*      
         installerClient(&pc);
@@ -51,13 +53,15 @@ int main()
         /*parc.nom_parc="my Parc";
         computer.nom="HP";
         pc2.nom="Mac";
-        pc3.nom="Dell";*/
-        ajouterMachine(p->reseau,computer);
+        pc3.nom="Dell";
+*/
+/*
+        ajouterMachineReseau(p->reseau,computer);
         afficherReseau(p->reseau);
-        /*
-        retirerMachine(p->reseau,computer);
+        
+        retirerMachineReseau(p->reseau,computer);
         afficherReseau(p->reseau);
-        */
+*/
         /*ajouterMachine(&parc,computer);
         afficherReseau(&parc);*/
         /*ajouterMachine(&monParc,pc2);
