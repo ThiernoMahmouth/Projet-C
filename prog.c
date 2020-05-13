@@ -10,9 +10,11 @@ int main()
     int choix1,choix11,choix12;
     int a;
     //foncttions choix 1
+    Machine *creer_machine();
     listeMachine ajouter_machine(listeMachine *listemachine);
     void supprimerMachine(listeMachine *machines, Machine *m1);
     void afficherParc();
+    Machine getMachine();
     void installerClient(Machine *ordi);
     void desinstallerClient(Machine *ordi);
     void installerServeur();
@@ -24,6 +26,7 @@ int main()
     void retirerMachine(Reseau *rsx, Machine *ordi);
     void ping();
     void afficherReseau();
+do {
     debut:do
     {
         printf("Menu principal\n");
@@ -41,12 +44,13 @@ int main()
                 printf("1. Creer Machine\n");
                 printf("2: Ajouter machine\n");
                 printf("3: Retirer machine\n");
-                printf("4: Afficher machine\n");
-                printf("5: Installer client\n");
-                printf("6: Desinstaller client\n");
-                printf("7: Installer serveur\n");
-                printf("8: Desinstaller serveur\n");
-                printf("9: Retour\n");
+                printf("4: Afficher parc\n");
+                printf("5: Recuperer Machine\n");
+                printf("6: Installer client\n");
+                printf("7: Desinstaller client\n");
+                printf("8: Installer serveur\n");
+                printf("9: Desinstaller serveur\n");
+                printf("10: Retour\n");
                 scanf("%d",&choix11);
                 Machine *m1 = malloc(sizeof(Machine));
                 if (m1 = NULL){
@@ -66,15 +70,18 @@ int main()
                     break;
                     case 4: afficherParc();
                     break;
-                    case 5: installerClient(m1);
+                    case 5: getMachine();
+                        printf("MAchine récupéré");
                     break;
-                    case 6: desinstallerClient(m1);
+                    case 6: installerClient(m1);
                     break;
-                    case 7: installerServeur(m1);
+                    case 7: desinstallerClient(m1);
                     break;
-                    case 8: desinstallerServeur(m1);
+                    case 8: installerServeur(m1);
                     break;
-                    case 9: goto debut;
+                    case 9: desinstallerServeur(m1);
+                    break;
+                    case 10: goto debut;
                     break;
                     default: printf("Choix note!!");
                 }
@@ -82,12 +89,13 @@ int main()
         case 2:
                 //menu2: 
                 printf("Fonctionnalites\n");
-                printf("1: Ajouter Machine \n");
-                printf("2: Retirer Machine\n");
-                printf("3: Ping\n");
-                printf("4: Afficher\n");
-                printf("5: DHCP\n");
-                printf("6: Retour\n");
+                printf("1: Creer Reseau\n");
+                printf("2: Ajouter Machine \n");
+                printf("3: Retirer Machine\n");
+                printf("4: Ping\n");
+                printf("5: Afficher\n");
+                printf("6: DHCP\n");
+                printf("7: Retour\n");
                 scanf("%d",&choix12);
                 listeMachine *listeReseau = malloc(sizeof(listeMachine));
                 if (listeReseau = NULL){
@@ -97,21 +105,20 @@ int main()
                 if (reseau = NULL){
                     return NULL;
                 }
-                reseau = creerReseau();
                 switch(choix12)
                 {
-                    
-                    case 1: ajouter_machine(listeReseau);
+                    case 1: reseau = creerReseau(reseau);
+                    case 2: ajouter_machine(listeReseau);
                     break; 
-                    case 2: retirerMachineReseau(reseau, m1);
+                    case 3: retirerMachineReseau(reseau, m1);
                     break;
-                    case 3: ping();
+                    case 4: ping();
                     break;
-                    case 4: afficherReseau();
+                    case 5: afficherReseau();
                     break;
-                    case 5: DHCP(reseau, m1);
+                    case 6: DHCP(reseau, m1);
                     break;
-                    case 6: goto debut;
+                    case 7: goto debut;
                     break;
                     default: printf("Choix note!!");
                 }
@@ -119,6 +126,6 @@ int main()
         
         default: printf("Fin\n");
     }
-
+}while(true);
     
 }
