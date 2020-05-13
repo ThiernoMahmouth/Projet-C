@@ -12,6 +12,7 @@ int main()
     //foncttions choix 1
     listeMachine ajouter_machine(listeMachine *listemachine);
     void supprimerMachine(listeMachine *machines, Machine *m1);
+    void afficherParc();
     void installerClient(Machine *ordi);
     void desinstallerClient(Machine *ordi);
     void installerServeur();
@@ -28,49 +29,50 @@ int main()
         printf("Menu principal\n");
         printf("1: Gerer le parc\n");
         printf("2: Gerer le reseau\n");
-        printf("3: Simuler des echanges entre clients et serveurs\n");
 
         scanf("%d", &choix1);
     }
-    while(choix1 <0 || choix1>3);
+    while(choix1 <0 || choix1>2);
     switch(choix1)
     {
         case 1: 
                 //menu1: 
                 printf("Fonctionnalites\n");
-                printf("1: Ajouter une machine\n");
-                printf("2: Retirer une machine\n");
-                printf("3: Afficher une machine\n");
-                printf("4: Installer un client\n");
-                printf("5: Desinstaller un client\n");
-                printf("6: Installer un serveur\n");
-                printf("7: Desinstaller un serveur\n");
-                printf("8: Autre\n");
+                printf("1. Creer Machine\n");
+                printf("2: Ajouter machine\n");
+                printf("3: Retirer machine\n");
+                printf("4: Afficher machine\n");
+                printf("5: Installer client\n");
+                printf("6: Desinstaller client\n");
+                printf("7: Installer serveur\n");
+                printf("8: Desinstaller serveur\n");
                 printf("9: Retour\n");
                 scanf("%d",&choix11);
                 Machine *m1 = malloc(sizeof(Machine));
                 if (m1 = NULL){
-                    return 1;
+                    return NULL;
                 }
                 listeMachine *liste1 = malloc(sizeof(listeMachine));
                 if (liste1 = NULL){
-                    return 1;
+                    return NULL;
                 }
                 switch(choix11)
                 {
-                    case 1: ajouter_machine(liste1);
+                    case 1: m1 = creer_machine();
                     break;
-                    case 2: supprimerMachine(liste1, m1);
+                    case 2: ajouter_machine(liste1);
                     break;
-                    case 3: afficherMachine();
+                    case 3: supprimerMachine(liste1, m1);
                     break;
-                    case 4: installerClient(m1);
+                    case 4: afficherParc();
                     break;
-                    case 5: desinstallerClient(m1);
+                    case 5: installerClient(m1);
                     break;
-                    case 6: installerServeur();
+                    case 6: desinstallerClient(m1);
                     break;
-                    case 7: desinstallerServeur(m1);
+                    case 7: installerServeur(m1);
+                    break;
+                    case 8: desinstallerServeur(m1);
                     break;
                     case 9: goto debut;
                     break;
@@ -80,24 +82,26 @@ int main()
         case 2:
                 //menu2: 
                 printf("Fonctionnalites\n");
-                printf("1: Ajouter \n");
-                printf("2: Retirer \n");
+                printf("1: Ajouter Machine \n");
+                printf("2: Retirer Machine\n");
                 printf("3: Ping\n");
                 printf("4: Afficher\n");
-                printf("5: Retour\n");
+                printf("5: DHCP\n");
+                printf("6: Retour\n");
                 scanf("%d",&choix12);
-                listeMachine *liste1 = malloc(sizeof(listeMachine));
-                if (liste1 = NULL){
-                    return 1;
+                listeMachine *listeReseau = malloc(sizeof(listeMachine));
+                if (listeReseau = NULL){
+                    return NULL;
                 }
                 Reseau *reseau = malloc(sizeof(Reseau));
                 if (reseau = NULL){
-                    return 1;
+                    return NULL;
                 }
                 reseau = creerReseau();
                 switch(choix12)
                 {
-                    case 1: ajouter_machine(liste1);
+                    
+                    case 1: ajouter_machine(listeReseau);
                     break; 
                     case 2: retirerMachineReseau(reseau, m1);
                     break;
@@ -105,7 +109,9 @@ int main()
                     break;
                     case 4: afficherReseau();
                     break;
-                    case 5: goto debut;
+                    case 5: DHCP(reseau, m1);
+                    break;
+                    case 6: goto debut;
                     break;
                     default: printf("Choix note!!");
                 }
