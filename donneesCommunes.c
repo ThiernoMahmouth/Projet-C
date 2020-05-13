@@ -58,6 +58,7 @@ void afficherClients(Machine *ordi)
     }
     printf("\n");
 }
+/*
 void afficherReseau(Reseau *reseau)
 {
     listeMachine *(*machineList)=&(reseau->liste_machines);
@@ -67,7 +68,7 @@ void afficherReseau(Reseau *reseau)
     }
     printf("\n");
 }
-
+*/
 //Persistance des donnees
 void updateFile(Machine *ordi)
 {

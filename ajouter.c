@@ -129,7 +129,7 @@
         printf("Combien de machines a ajouter?\n");
         scanf("%d", &n);
         Machine *creer_machine();
-        listeMachine *positionMachine  (listeMachine *listemachine);
+        listeMachine *positionMachine (listeMachine *listemachine);
         listeMachine *listeFinale = positionMachine (listemachine);
         for(i = 0; i < n; i++){
 

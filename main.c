@@ -14,7 +14,7 @@ int main()
         
         //printf("Vous avez saisi %s \n",par);
         //getMachine();
-        ping();
+        afficherParc();
 
 
 }
