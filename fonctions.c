@@ -67,14 +67,17 @@
             char ligne[1000];
             while(fgets(ligne, sizeof(ligne), file)!= NULL)
             {
+                //recuperation d'une ligne contenant les donnees d'une machine...
                     char id[3],ip[16],nom[20],mac[20],serveurs[200],clients[200],etat[3];
                     int i=0,j=0,k=0,l=0,m=0,n=0,o=0;
+                    //extraction de l'id
                     while(ligne[i]!=',')
                     {
                         id[i]=ligne[i];
                         i++;
                     }   
                     i++;
+                    //extraction du nom
                     while(ligne[i]!=',')
                     {
                         nom[j]=ligne[i];
@@ -82,6 +85,7 @@
                         j++;
                     }
                     i++;
+                    //extraction de l'adresse mac
                     while(ligne[i]!=',')
                     {
                         mac[k]=ligne[i];
@@ -89,6 +93,7 @@
                         k++;
                     }
                     i++;
+                    //extraction de l'etat de la machine
                     while(ligne[i]!=',')
                     {
                         etat[l]=ligne[i];
@@ -96,6 +101,7 @@
                         l++;
                     }
                     i++;
+                    //extraction de l'adresse ip
                     while(ligne[i]!=',')
                     {
                         ip[m]=ligne[i];
@@ -103,14 +109,16 @@
                         m++;
                     }
                     i++;
+                    //extraction de la liste des clients
                     while(ligne[i]!=']')
                     {
                         clients[n]=ligne[i];
                         i++;
                         n++;
                     }
-                    //clients[n]=']';
+                    clients[n]=']';
                     i+=2;
+                    //extraction de la liste des serveurs
                     while(ligne[i]!=']')
                     {
                         serveurs[o]=ligne[i];
@@ -118,8 +126,9 @@
                         o++;
                     }
                     serveurs[o]=']';
-                    if(!strcmp("pc2",nom) )
+                    if(!strcmp("pc2",nom) )/// comparaison entre le nom de la machine donnee en parame
                     {
+                        //stocke les donnees extraites dans la machine resultat
                         machine.id=atoi(id);
                         machine.nom=nom;
                         machine.adresseIp=ip;
@@ -128,7 +137,7 @@
                         machine.liste_serveurs=NULL;
                         machine.liste_clients=NULL;
                         printf("%s\n",serveurs);
-                        //liste serveurs de la machine                        
+                        //ajout de la liste des serveurs de la machine                        
                         int h=1,z;
                         char nomServeur[25];
                         listeServeurs *(*serverList)=&(machine.liste_serveurs);
@@ -159,7 +168,7 @@
                             }
                             
                         }while(serveurs[h]!=']');
-                        //liste clients de la machine
+                        //ajout de la liste des clients de la machine                        
                         h=1; 
                         z=0;
                         char nomClient[25];
