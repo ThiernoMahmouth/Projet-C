@@ -7,7 +7,7 @@
 
 int main()
 {
-    int choix1,choix11,choix12;
+    int choix1,choix11,choix12,repS;
     int a;
     //foncttions choix 1
     Machine *creer_machine();
@@ -39,17 +39,14 @@ do {
     switch(choix1)
     {
         case 1: 
-                //menu1: 
+                menu1: 
                 printf("Fonctionnalites\n");
                 printf("1. Creer Machine\n");
                 printf("2: Ajouter machine\n");
                 printf("3: Retirer machine\n");
                 printf("4: Afficher parc\n");
-                printf("5: Recuperer Machine\n");
-                printf("6: Installer client\n");
-                printf("7: Desinstaller client\n");
-                printf("8: Installer serveur\n");
-                printf("9: Desinstaller serveur\n");
+                printf("5: Selectionner Machine\n");
+                
                 printf("10: Retour\n");
                 scanf("%d",&choix11);
                 Machine *m1 = malloc(sizeof(Machine));
@@ -57,6 +54,8 @@ do {
                     return NULL;
                 }
                 listeMachine *liste1 = malloc(sizeof(listeMachine));
+                Machine pc;
+
                 if (liste1 = NULL){
                     return NULL;
                 }
@@ -70,24 +69,41 @@ do {
                     break;
                     case 4: afficherParc();
                     break;
-                    case 5: getMachine();
-                        printf("MAchine récupéré");
-                    break;
-                    case 6: installerClient(m1);
-                    break;
-                    case 7: desinstallerClient(m1);
-                    break;
-                    case 8: installerServeur(m1);
-                    break;
-                    case 9: desinstallerServeur(m1);
-                    break;
+                    case 5: 
+                        pc= getMachine();
+                        if(pc.id>0)
+                        {
+                            printf("Machine selectionne!\n");
+                            printf("1: Installer client\n");
+                            printf("2: Desinstaller client\n");
+                            printf("3: Installer serveur\n");
+                            printf("4: Desinstaller serveur\n");
+                            printf("5: Retour\n");
+                            scanf("%d",&repS);
+                            switch (repS)
+                            {
+                            case 1: installerClient(&pc);
+                            break;
+                            case 2: desinstallerClient(&pc);
+                            break;
+                            case 3: installerServeur(&pc);
+                            break;
+                            case 4: desinstallerServeur(&pc);
+                            break;
+                            default: goto menu1;
+                                break;
+                            }
+
+                        }
+                            break;
+                    
                     case 10: goto debut;
                     break;
                     default: printf("Choix note!!");
                 }
         break;
         case 2:
-                //menu2: 
+                menu2: 
                 printf("Fonctionnalites\n");
                 printf("1: Creer Reseau\n");
                 printf("2: Ajouter Machine \n");

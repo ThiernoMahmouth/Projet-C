@@ -457,11 +457,12 @@ void afficherReseau()
             }
         }
         updateFile(ordi);
+        printf("Serveur(s) ajoute(s)\n");
     }
         //***********Desintallation d'un serveur**************************
         void desinstallerServeur(Machine *ordi )
         {
-            char* serverName;
+            char* serverName=malloc(30);
             printf("Nom du serveur a desinstaller: ");
             scanf("%s",serverName);
             listeServeurs *(*serverList)=&(ordi->liste_serveurs);
@@ -485,6 +486,7 @@ void afficherReseau()
                         *serverList=suivant;
                         
                     }
+                    updateFile(ordi);
                     test=1;
                     break;
                 }
@@ -571,7 +573,7 @@ void afficherReseau()
         //***********Desinstallation de Clients**************************
     void desinstallerClient(Machine *ordi)
         {
-            char* clientName;
+            char* clientName=malloc(25);
             printf("Nom du client a desinstaller: ");
             scanf("%s",clientName);
             listeClients *(*clientList)=&(ordi->liste_clients);
@@ -593,6 +595,8 @@ void afficherReseau()
                     {
                         *clientList=suivant;
                     }
+                    updateFile(ordi);
+
                     test=1;
                     break;
                 }
@@ -603,7 +607,7 @@ void afficherReseau()
                 }
         
             }
-            test==0 ? printf("Ce client n'est pas installe dans la machine\n"):printf("Client desinstalle avec succes!");
+            test==0 ? printf("Ce client n'est pas installe dans la machine\n"):printf("Client desinstalle avec succes!\n");
         }
         //*******************Ajouter une Machine au reseau***************//
         void ajouterMachineReseau(Reseau *reseau,Machine *pc)
