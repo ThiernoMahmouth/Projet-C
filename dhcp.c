@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <time.h>
-//#include "donneesCommunes.c"
+#include "donneesCommunes.c"
 #include "ajouter.c"
 
 Reseau *DHCP (Reseau *reseau, Machine *m1){
@@ -13,12 +13,14 @@ Reseau *DHCP (Reseau *reseau, Machine *m1){
     char* lastDigits = "";
     printf("Tentative de connection...\n");
     listeMachine *positionMachine  (listeMachine *listemachine);
-    listeMachine *positionFinale = positionMachine(reseau);
-    strcpy(ip, positionFinale->machine.adresseIp + 10); 
+
+    listeMachine *positionFinale = positionMachine (reseau->liste_machines);
+    strcpy (ip, reseau->addrese);
+    ip[strlen(ip)-1] = 0; //suprime le dernier charactere de l'adresse donc le 0
     do{
         number = rand()%255;
         sprintf(lastDigits, "%d", number); //conversion de int a char
-        strcat(ip , lastDigits);
+        strcat(ip ,lastDigits);
         listeMachine *m=malloc(sizeof(listeMachine));
         if(m!= NULL)
         {
