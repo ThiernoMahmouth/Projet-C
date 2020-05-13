@@ -1,20 +1,21 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-#include "ajouter.c"
+//#include "ajouter.c"
+#include "donneesCommunes.c"
 #define DEFAULT_STRING_SIZE 30
 
 //creer reseau
 Reseau *creerReseau(){
     Reseau *reseau = malloc(sizeof(Reseau));
     if (reseau == NULL){
-        return 1;
+        return NULL;
     }
     char* adresse;
     char* masque;
     listeMachine *l1 = malloc(sizeof(listeMachine));
     if (l1 == NULL){
-        return 1;
+        return NULL;
     }
     listeMachine ajouter_machine(listeMachine *listemachine);
     printf("Entrez l'adresse du reseau\n");
@@ -670,3 +671,140 @@ void afficherReseau()
     }
     
 }
+
+void supprimerMachine(listeMachine *machines, Machine *m1){
+        for (listeMachine *tmp = machines; tmp != NULL; tmp = tmp->next ){
+            if (tmp->machine->nom = m1->nom){
+                free(tmp);
+            }
+        }
+        printf("La machime %s a été supprimée\n", m1->nom);
+    }
+
+
+    //DHCP
+    Reseau *DHCP (Reseau *reseau, Machine *m1){
+    srand(time(NULL));
+    int number = 0, unique = 0;
+    char* ip = "";
+    char* lastDigits = "";
+    printf("Tentative de connection...\n");
+    listeMachine *positionMachine  (listeMachine *listemachine);
+
+    listeMachine *positionFinale = positionMachine (reseau->liste_machines);
+    strcpy (ip, reseau->addrese);
+    ip[strlen(ip)-1] = 0; //suprime le dernier charactere de l'adresse donc le 0
+    do{
+        number = rand()%255;
+        sprintf(lastDigits, "%d", number); //conversion de int a char
+        strcat(ip ,lastDigits);
+        listeMachine *m=malloc(sizeof(listeMachine));
+        if(m!= NULL)
+        {
+            m->machine=m1;
+            m->next=NULL;
+        }
+        for (listeMachine *tmp = reseau->liste_machines; tmp != NULL; tmp = tmp->next){
+            if (!strcmp(tmp->machine->adresseIp, ip)){
+                unique = unique++;
+            }
+        }
+        if (unique = 0){
+            positionFinale->next = m;
+        }
+    }while(unique != 0);
+    printf("Connexion réussit.\n");
+    return reseau;
+}
+
+
+Machine *creer_machine(){
+        char* variable;
+        int nb, i;
+        void installerClient(Machine *ordi);
+        void installerServeur(Machine *ordi);
+        Machine *computer = malloc(sizeof(computer));
+        if (computer != NULL){
+            computer->nom = malloc(100);
+            printf("Entrez le nom de la machine: \n");
+            scanf("%s", computer->nom);
+
+            installerClient(computer);
+
+            installerServeur(computer);
+
+            computer->adresseMac = malloc(100);
+            printf("Entrez l'adresse MAC\n");
+            scanf("%s", computer->adresseMac);
+
+            computer->adresseIp = malloc(100);
+            computer->adresseIp = "NA";
+            computer->etat = NON;
+        printf("Machine %s créée.\n", computer->nom);
+        }
+
+        return computer;
+    }
+
+    ecrireFichier(Machine *m1){
+        FILE *file=fopen("fic.txt","r+");
+        if (file != NULL){
+            fprintf(file, "%s, %s, %s, %s,", m1->nom, m1->adresseMac, m1->adresseIp, m1->etat);
+            fputc('[',file);
+            for (listeClients *tmp = m1->liste_clients; tmp!=NULL; tmp = tmp->next){
+                fprintf(file, "%s,", m1->liste_clients);
+            }
+            fputc(']',file);
+            fputc('[',file);
+            for (listeServeurs *tmp = m1->liste_serveurs; tmp!=NULL; tmp = tmp->next){
+                fprintf(file, "%s,", m1->liste_serveurs);
+            }
+            fputc(']',file);
+
+        }
+        fclose(file);
+    }
+
+    listeMachine ajouter_machine(listeMachine *listemachine){
+        int i = malloc(sizeof(int)), n = malloc(sizeof(int));
+        printf("Combien de machines a ajouter?\n");
+        scanf("%d", &n);
+        Machine *creer_machine();
+        listeMachine *positionMachine  (listeMachine *listemachine);
+        listeMachine *listeFinale = positionMachine (listemachine);
+        
+        for(i = 0; i < n; i++){
+
+            Machine *creationMachine = malloc(sizeof(Machine));
+            if (creationMachine != NULL){
+                creationMachine = creer_machine();
+                listeMachine *computerList = malloc(sizeof(listeMachine));
+                if (computerList != NULL){
+                    computerList->machine = creationMachine;
+                    computerList->next = NULL;
+                    if (listemachine == NULL){
+                        listemachine = computerList;
+                        listeFinale = listemachine;
+                    }else{
+                        listeFinale->next = computerList;
+                        listeFinale = listeFinale->next;
+                    }
+                }   
+            }
+
+
+        }
+        return *listemachine;
+
+    }
+
+    listeMachine *positionMachine( listeMachine *listemachine){
+        listeMachine *positionMachine = malloc (sizeof(listeMachine));
+        if (positionMachine != NULL){
+            positionMachine = listemachine;
+            while (positionMachine->next != NULL){
+                positionMachine = positionMachine->next;
+            }
+        }
+        return positionMachine;
+    }

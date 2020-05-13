@@ -58,15 +58,15 @@ void afficherClients(Machine *ordi)
     }
     printf("\n");
 }
-void afficherReseau(Reseau *reseau)
-{
-    listeMachine *(*machineList)=&(reseau->liste_machines);
-    for (listeMachine *data = *machineList; data != NULL; data = data->next)
-    {
-        printf("%s ", data->machine->nom);
-    }
-    printf("\n");
-}
+// void afficherReseau(Reseau *reseau)
+// {
+//     listeMachine *(*machineList)=&(reseau->liste_machines);
+//     for (listeMachine *data = *machineList; data != NULL; data = data->next)
+//     {
+//         printf("%s ", data->machine->nom);
+//     }
+//     printf("\n");
+// }
 
 //Persistance des donnees
 void updateFile(Machine *ordi)
