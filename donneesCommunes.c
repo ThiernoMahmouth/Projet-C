@@ -24,7 +24,7 @@
     } Machine;
     typedef struct listeMachine
     {
-        Machine machine;
+        Machine *machine;
         struct listeMachine *next;
     } listeMachine;
     typedef struct Reseau
@@ -63,7 +63,7 @@ void afficherReseau(Reseau *reseau)
     listeMachine *(*machineList)=&(reseau->liste_machines);
     for (listeMachine *data = *machineList; data != NULL; data = data->next)
     {
-        printf("%s ", data->machine.nom);
+        printf("%s ", data->machine->nom);
     }
     printf("\n");
 }
