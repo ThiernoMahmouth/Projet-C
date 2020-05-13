@@ -114,6 +114,80 @@ void afficherReseau()
         }
     }
 
+        //*********** Recuperer toutes les machines**************************
+        void afficherParc()
+        {
+            FILE *file=fopen("fic.txt","r");
+            if(file != NULL)
+            {
+                char ligne[1000];
+                while(fgets(ligne, sizeof(ligne), file)!= NULL)
+                {
+                    //recuperation d'une ligne contenant les donnees d'une machine...
+                        char id[3],ip[16],nom[20],mac[20],etat[3];
+                        char serveurs[200]="";
+                        char clients[200]="";
+                        int i=0,j=0,k=0,l=0,m=0,n=0,o=0;
+                        //extraction de l'id
+                        while(ligne[i]!=',')
+                        {
+                            id[i]=ligne[i];
+                            i++;
+                        }   
+                        i++;
+                        //extraction du nom
+                        while(ligne[i]!=',')
+                        {
+                            nom[j]=ligne[i];
+                            i++;
+                            j++;
+                        }
+                        i++;
+                        //extraction de l'adresse mac
+                        while(ligne[i]!=',')
+                        {
+                            mac[k]=ligne[i];
+                            i++;
+                            k++;
+                        }
+                        i++;
+                        //extraction de l'etat de la machine
+                        while(ligne[i]!=',')
+                        {
+                            etat[l]=ligne[i];
+                            i++;
+                            l++;
+                        }
+                        i++;
+                        //extraction de l'adresse ip
+                        while(ligne[i]!=',')
+                        {
+                            ip[m]=ligne[i];
+                            i++;
+                            m++;
+                        }
+                        i++;
+                        //extraction de la liste des clients
+                        while(ligne[i]!=']')
+                        {
+                            clients[n]=ligne[i];
+                            i++;
+                            n++;
+                        }
+                        clients[n]=']';
+                        i+=2;
+                        //extraction de la liste des serveurs
+                        while(ligne[i]!=']')
+                        {
+                            serveurs[o]=ligne[i];
+                            i++;
+                            o++;
+                        }
+                        serveurs[o]=']';
+                        printf("nom: %s - @mac: %s - @ip: %s - clients: %s - serveurs: %s\n",nom,mac,ip,clients,serveurs);
+            }
+        }
+    }
         //*********** Recuperer une machine**************************
     Machine getMachine()
     {
