@@ -95,8 +95,10 @@ void retirerMachineReseau(Reseau *rsx, Machine ordi)
 void getMachine()
 {
     int id_machine = 0;
-    char *nom_machine, *adresse_mac, *adresse_ip, *est_connecte, *listeClients;
-    wchar_t *s_liste_clients, *s_liste_serveurs;
+    char *nom_machine, *adresse_mac, *adresse_ip, *est_connecte, *liste_clients, *liste_serveurs;
+    char*  separateurs="[,]";
+    char s_liste_clients[200]="";
+    char s_liste_serveurs[200]="";
     char enregistrement[DEFAULT_STRING_SIZE * 500];
     char* token = NULL;
     FILE* file = fopen("fic.txt", "r");
@@ -118,10 +120,34 @@ void getMachine()
         adresse_mac = strtok(NULL, ",");
         est_connecte = strtok(NULL, ",");
         adresse_ip = strtok(NULL, ",");
-        liste_clients = strtok(NULL, ",");
-        for(int i=0; i<)
-        s_liste_serveurs = strtok(NULL, ",");
-        printf("%d, %s, %s, %s, %s, %ls, %lls\n", id_machine, nom_machine, adresse_mac, est_connecte, adresse_ip, s_liste_clients, s_liste_serveurs);
+        strcpy(strtok(NULL, ","),s_liste_clients);
+        strcpy(strtok(NULL, ","),s_liste_serveurs);
+        //s_liste_serveurs = strtok(NULL, ",");
+        char* serveurs=strtok(s_liste_serveurs,separateurs);
+
+        printf("%d, %s, %s, %s, %s, %s, %s\n", id_machine, nom_machine, adresse_mac, est_connecte, adresse_ip,s_liste_clients,s_liste_serveurs);
+        //printf("%s\n",s_liste_serveurs);
+
+        //Tableau contenant le nom des serveurs
+        int nbServeurs=20;
+        char **tab_serveurs= (char**) malloc(nbServeurs*sizeof(char*));
+        for(int i=0; i<nbServeurs; i++)
+        {
+            tab_serveurs[i]=(char *) malloc(25);
+        }
+        int i=0;
+        while(serveurs!=NULL)
+        {
+            tab_serveurs[i]=serveurs;
+            serveurs=strtok(NULL,separateurs);
+            i++;
+        }
+        for(int j=0; j<i; j++)
+        {
+            printf("%s ",tab_serveurs[j]);
+        }
+        printf("\n");
+
     }
     
     

@@ -223,6 +223,7 @@
         
             fclose(file);
             printf("Cette Machine n'existe pas dans le parc\n");
+            machine.id=-99999;
             return machine;
         }
     }
@@ -484,7 +485,7 @@
     {
         listeMachine *(*machineList)=&(rsx->liste_machines);
         listeMachine *precedent= NULL;
-        int i=0;
+        int i=0,test=0;
         for(listeMachine *courant=*machineList; courant!= NULL; courant=courant->next)
         {
             listeMachine *suivant=courant->next;
@@ -501,12 +502,15 @@
                 {
                     *machineList=suivant;
                 }
+                test=1;
+                break;
             }
             else
             {
                 precedent=courant;
             }
         }
+        test==0? printf("Cette machine n'existe pas dans le reseau\n"):printf("Machine retiree du reseau avec succes!\n");
         FILE *file=fopen("reseau.txt","r");
         if(file != NULL)
         {

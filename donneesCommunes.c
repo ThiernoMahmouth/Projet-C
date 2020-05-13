@@ -75,10 +75,9 @@ void updateFile(Machine *ordi)
     if(file != NULL)
     {
         char ligne[2000];
-        int nbLigne=1;
         while(fgets(ligne, sizeof(ligne), file)!= NULL)
         {
-            if (nbLigne+1==ordi->id)
+            if (ordi->id==(atoi(strtok(ligne,","))))
             {
                //attributs dans l'ordre
                 fprintf(file,"%d, %s, ",ordi->id,ordi->nom);
@@ -99,7 +98,6 @@ void updateFile(Machine *ordi)
                 //rewind(file);
                 break;
             }
-            nbLigne++;
         }
         fclose(file);
     }

@@ -5,19 +5,26 @@
 #include "fonctions.c"
 
 int main()
-{
-        Parc parc, *p;
+{ 
+        /*Parc parc, *p;
         p=&parc;
-        Machine pc1,computer;
-        computer.id=5;
+        Machine pc1,computer;*/
+        //ping("192.168.140.22");
+        char* par;
+        
+        //printf("Vous avez saisi %s \n",par);
+        //getMachine();
+        ping();
+
+
+}
+        /*computer.id=5;
         computer.nom="Toshiba";
         computer.adresseMac="E2D45SSUI"; 
         computer.adresseIp="192.168.145.25";
         computer.etat=NON;
         computer.liste_serveurs=NULL;
-        computer.liste_clients=NULL;
-        ping("192.168.140.101");
-
+        computer.liste_clients=NULL;*/
         //int nbServerIns,nbClientIns;
        /* pc1.id=3;
         pc1.nom="HP";
@@ -68,5 +75,5 @@ int main()
         afficherReseau(&monParc);
         ajouterMachine(&monParc,pc3);
         afficherReseau(&monParc);*/
-}
+
 
