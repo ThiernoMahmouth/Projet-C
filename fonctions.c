@@ -6,8 +6,9 @@
 /************* PING par passage de l'adresse IP ***********************/
     void ping()
     {
-        char* param;
-        printf("Parametre de ping: ");
+        char* param=malloc(30);
+        printf("Le parametre de ping doit etre soit le nom soit l'adresse ip d'une machine donnee\n ");
+        printf("ping   ");
         scanf("%s",param);
         FILE *file=fopen("reseau.txt","r");
         if(file != NULL)
@@ -16,9 +17,9 @@
             int nbLigne=0;
             while(fgets(ligne, sizeof(ligne), file)!= NULL)
             {
-                if (nbLigne!=0) 
+                if(strstr(ligne,param))
                 {
-                    char ip[16],nom[20];
+                    char ip[20],nom[20];
                     int i=0,j=0;
                     while(ligne[i]!=',')
                     {
@@ -27,27 +28,29 @@
                     }   
                     i++;
                     while(ligne[i]!=',')
+                        {
+                            nom[j]=ligne[i];
+                            i++;
+                            j++;
+                        }
+                    if(!strcmp(ip,param))
                     {
-                        nom[j]=ligne[i];
-                        i++;
-                        j++;
-                    }
-                    printf("ip= %s ; nom= %s ; param= %s\n",ip,nom,param);
-                    if(!strcmp(ip,param) )
-                    {
-                        printf("Cet addresse IP est attribuee a %s\n",nom);
+                        printf("%s ==> %s\n",ip,nom);
                         nbLigne=99;
                         break;
                     }
-                    else if(!strcmp(nom,param))
+                    else
                     {
-                        printf("Cette machine est connectee avec l'adresse %s\n",ip);
-                        nbLigne=99;
-                        break;
+                        if(!strcmp(nom,param))
+                        {
+                            printf("%s ==> %s\n",nom,ip);
+                            nbLigne=99;
+                            break;
+                        }
                     }
+                    
                 }
-                nbLigne++;
-                //rewind(file);
+              
             }
             if(nbLigne!= 99) printf("Inconnu dans le reseau\n");
             fclose(file);
@@ -55,11 +58,13 @@
     }
 
         //*********** Recuperer une machine**************************
-    void getMachine()
+    Machine getMachine()
     {
-        char* nomMachine;
+    
+        char* nomMachine=malloc(30);
         printf("Donner le nom de la machine : ");
         scanf("%s",nomMachine);
+       // printf("Vous avez saisi %s\n",nomMachine);
         Machine machine;
         FILE *file=fopen("fic.txt","r");
         if(file != NULL)
@@ -67,8 +72,12 @@
             char ligne[1000];
             while(fgets(ligne, sizeof(ligne), file)!= NULL)
             {
+                if(strstr(ligne,nomMachine))
+                {
                 //recuperation d'une ligne contenant les donnees d'une machine...
-                    char id[3],ip[16],nom[20],mac[20],serveurs[200],clients[200],etat[3];
+                    char id[3],ip[16],nom[20],mac[20],etat[3];
+                    char serveurs[200]="";
+                    char clients[200]="";
                     int i=0,j=0,k=0,l=0,m=0,n=0,o=0;
                     //extraction de l'id
                     while(ligne[i]!=',')
@@ -126,102 +135,100 @@
                         o++;
                     }
                     serveurs[o]=']';
-                    if(!strcmp("pc2",nom) )/// comparaison entre le nom de la machine donnee en parame
-                    {
-                        //stocke les donnees extraites dans la machine resultat
+                    //stocke les donnees extraites dans la machine resultat
                         machine.id=atoi(id);
                         machine.nom=nom;
                         machine.adresseIp=ip;
                         machine.adresseMac=mac;
-                       // machine.etat=etat;
+                        if(!strcmp(etat,"OUI"))
+                        {
+                            machine.etat=1;
+                        }
+                        else machine.etat=0;
+            
                         machine.liste_serveurs=NULL;
                         machine.liste_clients=NULL;
-                        printf("%s\n",serveurs);
-                        //ajout de la liste des serveurs de la machine                        
-                        int h=1,z;
-                        char nomServeur[25];
-                        listeServeurs *(*serverList)=&(machine.liste_serveurs);
-                        listeServeurs *dernier=malloc(sizeof(listeServeurs));
-                        do
+                        //ajout de la liste des clients de la machine  
+                    listeClients *(*clientList)=&(machine.liste_clients);
+                    listeClients *dernierClient=malloc(sizeof(listeClients));  
+                                
+                    char*  separateurs="[,]";
+                    char* clientNames=strtok(clients,separateurs);
+                    while(clientNames!=NULL)
+                    {
+                        listeClients *m=malloc(sizeof(listeClients));
+                        if(m!= NULL)
                         {
-                            z=0;
-                            while(serveurs[h]!=',' || serveurs[h]!=']')
-                            {
-                                nomServeur[z]=serveurs[h];
-                                h++;
-                                z++;
-                            }
-                            printf("%s\n",nomServeur);
-                            listeServeurs *m=malloc(sizeof(listeServeurs));
-                            if(m!= NULL)
-                            {
-                                m->nom_serveur=nomServeur;
+                                m->nom_client=clientNames;
                                 m->next=NULL;
                                 //Parcourt jusqu'au dernier element de la liste
-                                dernier=*serverList;
-                                while(dernier->next != NULL)
+                                if(*clientList==NULL)
                                 {
-                                    dernier=dernier->next;
+                                    *clientList=m;
                                 }
+                                else 
+                                {
+
+                                    dernierClient=*clientList;
+                                    while(dernierClient->next != NULL)
+                                    {
+                                        dernierClient=dernierClient->next;
+                                    }
+                                }
+                                
+                                //Ajouter le nouvel element a la fin
+                                dernierClient->next=m;
+                        }
+                        clientNames=strtok(NULL,separateurs);
+
+                    }
+                        //ajout de la liste des serveurs de la machine  
+                    listeServeurs *(*serverList)=&(machine.liste_serveurs);
+                    listeServeurs *dernier=malloc(sizeof(listeServeurs));  
+                                
+                    char* serverNames=strtok(serveurs,separateurs);
+                    while(serverNames!=NULL)
+                    {
+                        listeServeurs *m=malloc(sizeof(listeServeurs));
+                        if(m!= NULL)
+                        {
+                                m->nom_serveur=serverNames;
+                                m->next=NULL;
+                                //Parcourt jusqu'au dernier element de la liste
+                                if(*serverList==NULL)
+                                {
+                                    *serverList=m;
+                                }
+                                else 
+                                {
+
+                                    dernier=*serverList;
+                                    while(dernier->next != NULL)
+                                    {
+                                        dernier=dernier->next;
+                                    }
+                                }
+                                
                                 //Ajouter le nouvel element a la fin
                                 dernier->next=m;
-                            }
-                            
-                        }while(serveurs[h]!=']');
-                        //ajout de la liste des clients de la machine                        
-                        h=1; 
-                        z=0;
-                        char nomClient[25];
-                        listeClients *(*clientList)=&(machine.liste_clients);
-                        listeClients *dernierC=malloc(sizeof(listeClients));
-                        do
-                        {
-                            z=0;
-                            while(clients[h]!=',' || clients[h]!=']')
-                            {
-                                nomClient[z]=clients[h];
-                                h++;
-                                z++;
-                            }
-                            printf("%s\n",nomClient);
-                            listeClients *mC=malloc(sizeof(listeClients));
-                            if(mC!= NULL)
-                            {
-                                mC->nom_client=nomClient;
-                                mC->next=NULL;
-                                //Parcourt jusqu'au dernier element de la liste
-                                dernierC=*clientList;
-                                while(dernierC->next != NULL)
-                                {
-                                    dernierC=dernierC->next;
-                                }
-                                //Ajouter le nouvel element a la fin
-                                dernierC->next=mC;
-                            }
-                            
-                        }while(clients[h]!=']');
+                        }
+                        serverNames=strtok(NULL,separateurs);
 
-                        //afficherServeurs(&machine);*/
-                        //printf("id= %s ; nom= %s ; mac= %s ; etat=%s ; ip=%s ; clients=%s ; serveurs=%s\n",id,nom,mac,etat,ip,clients,serveurs);
-                        break;
-                    }  
-                //rewind(file);
+                    }
+                    fclose(file);
+                    return machine;
+
+                }
             }
-            /*if(nbLigne!= 99) printf("Inconnu dans le reseau\n");
-            }*/
+        
             fclose(file);
+            printf("Cette Machine n'existe pas dans le parc\n");
             return machine;
         }
     }
         //***********Intallation de serveurs**************************
     void installerServeur(Machine *ordi)
     {
-        /*
-            char* nomMachine;
-            printf("Donner le nom de la machine : ");
-            scanf("%s",nomMachine);
-
-        */
         int nbre;
         printf("Nombre de servers a installer: ");
         scanf("%d",&nbre); 
@@ -299,7 +306,8 @@
             scanf("%s",serverName);
             listeServeurs *(*serverList)=&(ordi->liste_serveurs);
             listeServeurs *precedent= NULL;
-            int i=0;
+            int i=0,test=0;
+
             for(listeServeurs *courant=*serverList; courant!= NULL; courant=courant->next)
             {
                 listeServeurs *suivant=courant->next;
@@ -315,15 +323,18 @@
                     else    //c le 1er element de la liste donc il n'a pas de precedent
                     {
                         *serverList=suivant;
+                        
                     }
+                    test=1;
+                    break;
                 }
                 
                 else
                 {
                     precedent=courant;
                 }
-        
             }
+            test==0 ? printf("Ce serveur n'est pas installe dans la machine\n"):printf("Serveur desinstalle avec succes!");
         }
         //***********Installation de Clients**************************
     void installerClient(Machine *ordi)
@@ -405,7 +416,7 @@
             scanf("%s",clientName);
             listeClients *(*clientList)=&(ordi->liste_clients);
             listeClients *precedent= NULL;
-            int i=0;
+            int i=0,test=0;
             for(listeClients *courant=*clientList; courant!= NULL; courant=courant->next)
             {
                 listeClients *suivant=courant->next;
@@ -422,6 +433,8 @@
                     {
                         *clientList=suivant;
                     }
+                    test=1;
+                    break;
                 }
                 
                 else
@@ -430,6 +443,7 @@
                 }
         
             }
+            test==0 ? printf("Ce client n'est pas installe dans la machine\n"):printf("Client desinstalle avec succes!");
         }
         //*******************Ajouter une Machine au reseau***************//
         void ajouterMachineReseau(Reseau *reseau,Machine pc)
