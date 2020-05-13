@@ -105,13 +105,12 @@ do {
         case 2:
                 menu2: 
                 printf("Fonctionnalites\n");
-                printf("1: Creer Reseau\n");
-                printf("2: Ajouter Machine \n");
-                printf("3: Retirer Machine\n");
-                printf("4: Ping\n");
-                printf("5: Afficher\n");
-                printf("6: DHCP\n");
-                printf("7: Retour\n");
+                printf("1: Ajouter Machine \n");
+                printf("2: Retirer Machine\n");
+                printf("3: Ping\n");
+                printf("4: Afficher\n");
+                printf("5: DHCP\n");
+                printf("6: Retour\n");
                 scanf("%d",&choix12);
                 listeMachine *listeReseau = malloc(sizeof(listeMachine));
                 if (listeReseau = NULL){
@@ -123,18 +122,29 @@ do {
                 }
                 switch(choix12)
                 {
-                    case 1: reseau = creerReseau(reseau);
-                    case 2: ajouter_machine(listeReseau);
+                    case 1: 
+                        pc= getMachine();
+                        if(pc.id>0)
+                        {
+                            ajouterMachineReseau(listeReseau,&pc);
+                        }
                     break; 
-                    case 3: retirerMachineReseau(reseau, m1);
+                    case 2: 
+                        pc= getMachine();
+                        if(pc.id>0)
+                        {
+retirerMachineReseau(reseau, m1);
+    
+                            }
+                    
                     break;
-                    case 4: ping();
+                    case 3: ping();
                     break;
-                    case 5: afficherReseau();
+                    case 4: afficherReseau();
                     break;
-                    case 6: DHCP(reseau, m1);
+                    case 5: DHCP(reseau, m1);
                     break;
-                    case 7: goto debut;
+                    case 6: goto debut;
                     break;
                     default: printf("Choix note!!");
                 }

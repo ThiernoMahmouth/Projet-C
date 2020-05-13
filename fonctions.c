@@ -457,7 +457,7 @@ void afficherReseau()
             }
         }
         updateFile(ordi);
-        printf("Serveur(s) ajoute(s)\n");
+        printf("Serveur(s) installe(s)\n");
     }
         //***********Desintallation d'un serveur**************************
         void desinstallerServeur(Machine *ordi )
@@ -496,7 +496,7 @@ void afficherReseau()
                     precedent=courant;
                 }
             }
-            test==0 ? printf("Ce serveur n'est pas installe dans la machine\n"):printf("Serveur desinstalle avec succes!");
+            test==0 ? printf("Ce serveur n'est pas installe dans la machine\n"):printf("Serveur desinstalle avec succes!\n");
         }
         //***********Installation de Clients**************************
     void installerClient(Machine *ordi)
@@ -569,6 +569,7 @@ void afficherReseau()
             }
         }
         updateFile(ordi);
+        printf("Client(s) installe(s)\n");
     }
         //***********Desinstallation de Clients**************************
     void desinstallerClient(Machine *ordi)
@@ -639,9 +640,10 @@ void afficherReseau()
             if(file != NULL)
             {
             //attributs dans l'ordre
-                fprintf(file,"%d, %s, %s, %s\n",pc->id,pc->nom,pc->adresseIp,pc->adresseMac);       
+                fprintf(file,"%d, %s, %s, %s\n",pc->adresseIp,pc->nom,pc->adresseMac);       
             }
             fclose(file);
+            printf("Machine bien aoutee!\n");
         }
         //*******************Retirer une Machine du reseau***************//
     void retirerMachineReseau(Reseau *rsx, Machine *ordi)
