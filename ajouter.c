@@ -124,8 +124,10 @@
         return computer;
     }
 
-    listeMachine ajouter_machine(int n, listeMachine *listemachine){
-        int i;
+    listeMachine ajouter_machine(listeMachine *listemachine){
+        int i,n;
+        printf("Combien de machines a ajouter?\n");
+        scanf("%d", &n);
         Machine *creer_machine();
         listeMachine *positionMachine  (listeMachine *listemachine);
         listeMachine *listeFinale = positionMachine (listemachine);
@@ -150,6 +152,7 @@
 
 
         }
+        return *listemachine;
 
     }
 

@@ -1,7 +1,64 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-#include "donneesCommunes.c"
+#include "ajouter.c"
+#define DEFAULT_STRING_SIZE 30
+
+//creer reseau
+Reseau *creerReseau(){
+    Reseau *reseau = malloc(sizeof(Reseau));
+    if (reseau == NULL){
+        return 1;
+    }
+    char* adresse;
+    char* masque;
+    listeMachine *l1 = malloc(sizeof(listeMachine));
+    if (l1 == NULL){
+        return 1;
+    }
+    listeMachine ajouter_machine(listeMachine *listemachine);
+    printf("Entrez l'adresse du reseau\n");
+    scanf("%s", adresse);
+    printf("Entrez le masque du reseau\n");
+    scanf("%s", masque);
+    ajouter_machine(l1);
+    reseau->liste_machines = l1;
+
+    return *reseau;
+}
+//afficher reseau
+void afficherReseau()
+{
+    int id_machine = 0;
+    char *nom_machine, *adresse_mac, *adresse_ip, *est_connecte;
+    char *s_liste_clients, *s_liste_serveurs;
+    char enregistrement[DEFAULT_STRING_SIZE * 100];
+    char* token = NULL;
+    FILE* f_enregistrements = fopen("fic.txt", "r");
+    int nombre_machine = 0;
+
+    if (!f_enregistrements) {
+        perror("Erreur lors de l'ouverture du fichier contenant les enregistrements");
+        return EXIT_FAILURE;
+    }
+
+    fscanf(f_enregistrements, "%d", &nombre_machine);
+
+    for (int i = 0; (i < nombre_machine) && (!feof(f_enregistrements)); i++)
+    {
+        fscanf(f_enregistrements, "%s", enregistrement);
+        id_machine = atoi(strtok(enregistrement, ","));
+        nom_machine = strtok(NULL, ",");
+        adresse_mac = strtok(NULL, ",");
+        est_connecte = strtok(NULL, ",");
+        adresse_ip = strtok(NULL, ",");
+        s_liste_clients = strtok(NULL, ",");
+        s_liste_serveurs = strtok(NULL, ",");
+        printf("%d, %s, %s, %s, %s, %s, %s\n", id_machine, nom_machine, adresse_mac, est_connecte, adresse_ip, s_liste_clients, s_liste_serveurs);
+    }
+    
+}
+
 
 /************* PING par passage de l'adresse IP ***********************/
     void ping()
@@ -432,7 +489,7 @@
             }
         }
         //*******************Ajouter une Machine au reseau***************//
-        void ajouterMachineReseau(Reseau *reseau,Machine pc)
+        void ajouterMachineReseau(Reseau *reseau,Machine *pc)
         {
             listeMachine *(*MachineList)=&(reseau->liste_machines);
             listeMachine *n=malloc(sizeof(listeMachine));
@@ -461,12 +518,12 @@
             if(file != NULL)
             {
             //attributs dans l'ordre
-                fprintf(file,"%d, %s, %s, %s\n",pc.id,pc.nom,pc.adresseIp,pc.adresseMac);       
+                fprintf(file,"%d, %s, %s, %s\n",pc->id,pc->nom,pc->adresseIp,pc->adresseMac);       
             }
             fclose(file);
         }
         //*******************Retirer une Machine du reseau***************//
-    void retirerMachineReseau(Reseau *rsx, Machine ordi)
+    void retirerMachineReseau(Reseau *rsx, Machine *ordi)
     {
         listeMachine *(*machineList)=&(rsx->liste_machines);
         listeMachine *precedent= NULL;
@@ -474,7 +531,7 @@
         for(listeMachine *courant=*machineList; courant!= NULL; courant=courant->next)
         {
             listeMachine *suivant=courant->next;
-            if (!strcmp(courant->machine.nom,ordi.nom))
+            if (!strcmp(courant->machine->nom,ordi->nom))
             {
                 //suppession
                 free(courant);
