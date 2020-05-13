@@ -24,7 +24,7 @@ Reseau *creerReseau(){
     ajouter_machine(l1);
     reseau->liste_machines = l1;
 
-    return *reseau;
+    return reseau;
 }
 //afficher reseau
 void afficherReseau()
