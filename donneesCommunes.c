@@ -88,22 +88,22 @@ void updateFile(Machine *ordi)
         char ligne[2000];
         while(fgets(ligne, sizeof(ligne), file)!= NULL)
         {
-            if (ordi->id==(atoi(strtok(ligne,","))))
+            if (ordi->id - 1==(atoi(strtok(ligne,","))))
             {
                //attributs dans l'ordre
-                fprintf(file,"%d, %s, ",ordi->id,ordi->nom);
+                fprintf(file,"%d,%s,",ordi->id,ordi->nom);
                 //Liste clients
                 fputc('[',file);
                 for (listeClients *data = ordi->liste_clients; data != NULL; data = data->next)
                 {
-                    fprintf(file, "%s, ", data->nom_client);
+                    fprintf(file, "%s,", data->nom_client);
                 }
-                fputs("], ",file);
+                fputs("],",file);
                 //Liste des serveurs
                 fputc('[',file);
                 for (listeServeurs *data = ordi->liste_serveurs; data != NULL; data = data->next)
                 {
-                    fprintf(file, "%s, ", data->nom_serveur);
+                    fprintf(file, "%s,", data->nom_serveur);
                 }
                 fputs("]\n",file);
                 //rewind(file);

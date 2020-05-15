@@ -6,16 +6,13 @@
 
 int main()
 { 
-        /*Parc parc, *p;
-        p=&parc;
-        Machine pc1,computer;*/
-        //ping("192.168.140.22");
-        char* par;
-        
-        //printf("Vous avez saisi %s \n",par);
-        //getMachine();
-        afficherParc();
+        //Machine pc=getMachine();
+        //ajouterMachineReseau(&pc);
+        //retirerMachineReseau(&pc);
+        afficherReseau();
+        ping();
 
+        
 
 }
         /*computer.id=5;
